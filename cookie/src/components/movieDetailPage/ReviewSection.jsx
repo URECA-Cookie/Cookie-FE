@@ -8,14 +8,29 @@ const ReviewWrapper = styled.div`
   h2 {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
     .review-count {
       font-size: 14px;
       color: #666;
+      margin-left: 10px;
+    }
+
+    .write-review-button {
+      margin-left: auto; /* 버튼을 오른쪽으로 밀기 */
+      font-size: 14px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
     }
   }
 
@@ -61,16 +76,28 @@ const ReviewWrapper = styled.div`
           font-size: 12px;
           color: #cc5283;
         }
+      }
+    }
+  }
 
-        .more {
-          font-size: 12px;
-          color: #007bff;
-          cursor: pointer;
+  .more-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 
-          &:hover {
-            text-decoration: underline;
-          }
-        }
+    button {
+      font-size: 14px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
       }
     }
   }
@@ -83,14 +110,19 @@ const ReviewSection = ({ reviews, reviewCount }) => {
     navigate("/reviews"); // 더보기 클릭 시 리뷰 페이지로 이동
   };
 
+  const handleWriteReviewClick = () => {
+    navigate("/reviews/write"); // 리뷰 작성하기 클릭 시 리뷰 작성 페이지로 이동
+  };
+
   return (
     <ReviewWrapper>
       <h2>
-        리뷰 <span className="review-count">{reviewCount}+</span>
+        리뷰
+        <span className="review-count">{reviewCount}</span>
+        <button className="write-review-button" onClick={handleWriteReviewClick}>
+          리뷰 작성하기
+        </button>
       </h2>
-      <div className="more" onClick={handleMoreClick}>
-        더보기
-      </div>
       <div className="review-grid">
         {reviews.slice(0, 4).map((review, index) => (
           <div className="review-item" key={index}>
@@ -101,6 +133,9 @@ const ReviewSection = ({ reviews, reviewCount }) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="more-button">
+        <button onClick={handleMoreClick}>더보기</button>
       </div>
     </ReviewWrapper>
   );
