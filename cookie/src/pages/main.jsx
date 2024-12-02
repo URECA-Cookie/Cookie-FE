@@ -6,8 +6,8 @@ import SpecialMovie from "../components/main/SpecialMovie";
 import GenreMovie from "../components/main/GenreMovie";
 import TopButton from "../components/searchpage/TopButton";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
+import useAuthStore from "../stores/useAuthStore";
 
 const CommonContainer = styled.div`
   width: 100%;
@@ -115,7 +115,7 @@ const Main = () => {
   ];
 
   const [showTopButton, setShowTopButton] = useState(false);
-  const navigate = useNavigate();
+  const { isLogined } = useAuthStore();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -145,7 +145,7 @@ const Main = () => {
           <GenreMovie />
         </Content>
         <LoginModal />
-        <WriteReviewButton onClick={() => navigate("/searchmov")}>
+        <WriteReviewButton onClick={() => isLogined("/searchmov")}>
           리뷰 작성하기
         </WriteReviewButton>
         <TopButton visible={showTopButton} onClick={scrollToTop} />

@@ -82,11 +82,12 @@ function AdminLogin() {
       });
 
       const { accessToken, refreshToken } = response.data.response;
-      console.log(accessToken, refreshToken);
+      console.log(response);
       if (accessToken && refreshToken) {
         sessionStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-
+        console.log(accessToken);
+        console.log(refreshToken);
         navigate("/admin/movie");
       } else {
         throw new Error("토큰 발급 실패");

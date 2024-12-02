@@ -5,6 +5,7 @@ import GlobalStyle from "./styles/global";
 import AddMovie from "../src/pages/admin/AdminMovie";
 import AdminLogin from "../src/pages/admin/AdminLogin";
 import ScrollToTop from "./components/ScrollToTop";
+import LoginModal from "./components/LoginModal";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <ScrollToTop />
+        <LoginModal />
         <Routes>
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/movie" element={<AddMovie />} />

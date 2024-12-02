@@ -8,8 +8,6 @@ import useNotificationStore from "../../stores/notificationStore";
 const ReTokenPage = () => {
   const navigate = useNavigate();
 
-  //TODO 배포서버 주소도 사용하기
-
   useEffect(() => {
     axios
       .get(`${serverBaseUrl}/api/auth/retrieve-token`, {

@@ -37,7 +37,6 @@ export const LoginBtn = styled.div`
     cursor: pointer;
   }
 `;
-//TODO 로그인연동하기
 
 function Login() {
   const handleLoginClick = (url) => {
