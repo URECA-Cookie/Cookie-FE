@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import deleteBtn from "../assets/images/signUp/close_icon.svg";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../stores/useAuthStore";
 
 const BottomModalContainer = styled.div`
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${($isOpen) => ($isOpen ? "flex" : "none")};
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
   justify-content: center;
   align-items: flex-end;
   z-index: 9998;
@@ -89,22 +89,28 @@ const ModalContent = styled.div`
 `;
 
 const LoginModal = () => {
-  const { isLoginModalOpen, closeLoginModal } = useAuthStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  if (!isLoginModalOpen) return null;
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
   const handleModalLogin = () => {
-    closeLoginModal();
     navigate("/login");
   };
 
   return (
     <div>
-      <BottomModalContainer $isOpen={isLoginModalOpen}>
+      <button onClick={handleModalOpen}>로그인 바텀업</button>
+      <BottomModalContainer isOpen={isModalOpen}>
         <ModalContent>
           <div className="modal">
             <div className="modalBtn__container">
-              <button className="modal__closeBtn" onClick={closeLoginModal}>
+              <button className="modal__closeBtn" onClick={handleModalClose}>
                 <img src={deleteBtn} />
               </button>
             </div>
