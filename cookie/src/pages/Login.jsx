@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { OAuth_LOGIN_PROVIDER } from "../config/OAuthConfig";
 
 export const LoginContainer = styled.div`
-  background-color: var(--main);
+  background-color: #fff4b9;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@ export const LoginContainer = styled.div`
   align-items: center;
 
   h2 {
-    color: white;
+    color: #724b2e;
   }
 
   .login__img {
