@@ -74,7 +74,7 @@ const CommentsSectionContainer = styled.div`
     }
 
     button {
-      background-color: #66BEFF;
+      background-color: #66beff;
       color: white;
       border: none;
       border-radius: 50%;
@@ -240,13 +240,11 @@ const ReviewDetail = () => {
     }
 
     try {
-      // 서버에 수정 요청 전송
       await axiosInstance.post(`/api/reviews/comments/${commentId}`, {
         reviewId,
         comment: editingCommentText,
       });
 
-      // 댓글 수정 완료 후 상태 업데이트
       setReviewData((prevData) => ({
         ...prevData,
         comments: prevData.comments.map((comment) =>
@@ -256,7 +254,6 @@ const ReviewDetail = () => {
         ),
       }));
 
-      // 상태 초기화 및 알림
       setEditingCommentId(null);
       setEditingCommentText("");
       toast.success("댓글이 수정되었습니다!");
@@ -267,7 +264,7 @@ const ReviewDetail = () => {
   };
 
   const handleDeleteComment = async (commentId) => {
-    console.log("삭제 요청 - commentId:", commentId); // 전달된 commentId 확인
+    console.log("삭제 요청 - commentId:", commentId);
 
     if (!commentId) {
       toast.error("삭제할 댓글 ID가 존재하지 않습니다.");
@@ -290,6 +287,17 @@ const ReviewDetail = () => {
     } catch (error) {
       console.error("Failed to delete comment:", error);
       toast.error("댓글 삭제에 실패했습니다.");
+    }
+  };
+
+  const handleDeleteReview = async () => {
+    try {
+      await axiosInstance.delete(`/api/reviews/${reviewId}`);
+      toast.success("리뷰가 성공적으로 삭제되었습니다.");
+      navigate("/");
+    } catch (error) {
+      console.error("리뷰 삭제 실패:", error);
+      toast.error("리뷰 삭제에 실패했습니다.");
     }
   };
 
@@ -329,16 +337,28 @@ const ReviewDetail = () => {
     return <Container>No review found.</Container>;
   }
 
+  const handleUpdateReview = async (updatedData) => {
+    try {
+      await axiosInstance.put(`/api/reviews/${reviewId}`, updatedData);
+      toast.success("리뷰가 성공적으로 업데이트되었습니다.");
+      navigate("/myAllReviewList");
+    } catch (error) {
+      console.error("리뷰 업데이트 실패:", error);
+      toast.error("리뷰 업데이트에 실패했습니다.");
+    }
+  };
+
   return (
     <Container>
       <DetailHeader onBack={() => navigate(-1)} />
       <ReviewContentSection
-        posterSrc={reviewData.movie.poster}
-        profileSrc={reviewData.user.profileImage}
-        name={reviewData.user.nickname}
+        posterSrc={reviewData.movie?.poster || "/default-poster.png"}
+        profileSrc={reviewData.user?.profileImage || "/default-profile.png"}
+        name={reviewData.user?.nickname || "Unknown User"}
         date={new Date(reviewData.createdAt).toLocaleDateString()}
-        movieTitle={reviewData.movie.title}
-        cookieScoreCount={reviewData.movieScore}
+        movieTitle={reviewData.movie?.title || "Untitled Movie"}
+        cookieScoreCount={reviewData.movieScore || 0}
+        handleUpdateReview={handleUpdateReview}
         isMenuOpen={isMenuOpen}
         toggleMenu={toggleMenu}
       />
@@ -366,8 +386,8 @@ const ReviewDetail = () => {
             onChange={(e) => setNewComment(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // 기본 동작 방지
-                handleAddComment(); // 댓글 추가 함수 호출
+                e.preventDefault();
+                handleAddComment();
               }
             }}
           />
