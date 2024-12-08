@@ -4,6 +4,7 @@ import videoIcon from "../../assets/images/main/video_icon.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../api/auth/axiosInstance";
 import serverBaseUrl from "../../config/apiConfig";
+import mixpanel from "mixpanel-browser";
 
 const MovieRecommendList = styled.div`
   position: relative;
@@ -101,7 +102,13 @@ function AdminRecommend() {
     fetchMainPageMovies();
   }, []);
 
-  const handleMovieClick = (movieId) => {
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Admin Recommended Movie Click", {
+      movieId,
+      movieTitle,
+      timestamp: new Date().toISOString(),
+    });
+
     navigate(`/movie/${movieId}`);
   };
 

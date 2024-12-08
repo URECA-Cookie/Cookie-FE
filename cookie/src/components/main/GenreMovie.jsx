@@ -3,6 +3,7 @@ import styled from "styled-components";
 import videoIcon from "../../assets/images/main/video_icon.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../api/auth/axiosInstance";
+import mixpanel from "mixpanel-browser";
 
 const GenreMovieList = styled.div`
   position: relative;
@@ -147,7 +148,13 @@ function GenreMovie({ categorydata }) {
     fetchMoviesByGenre(genre);
   };
 
-  const handleMovieClick = (id) => {
+  const handleMovieClick = (id, title) => {
+    mixpanel.track("Genre Movie Click", {
+      id,
+      title,
+      genre: selectedGenre,
+      timestamp: new Date().toISOString(),
+    });
     navigate(`/movie/${id}`);
   };
 
@@ -177,7 +184,7 @@ function GenreMovie({ categorydata }) {
               <div
                 key={index}
                 className="genre__movie--list"
-                onClick={() => handleMovieClick(movie.id)}
+                onClick={() => handleMovieClick(movie.id, movie.title)}
               >
                 <img src={movie.poster} alt={movie.title} />
                 <div>

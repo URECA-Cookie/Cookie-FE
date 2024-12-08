@@ -4,6 +4,7 @@ import cookieMovie from "../../assets/images/main/cookie_icon.svg";
 import useUserStore from "../../stores/useUserStore";
 import axiosInstance from "../../api/auth/axiosInstance";
 import serverBaseUrl from "../../config/apiConfig";
+import mixpanel from "mixpanel-browser";
 
 const CookieMovieList = styled.div`
   position: relative;
@@ -88,9 +89,25 @@ const CookieMovieList = styled.div`
   }
 `;
 
+/*
+  이 파트는 onClick 이벤트 구현이 안되어 있어 디벨롭 업데이트 확인하는대로 맞춰서 믹스패널 설정 다시 적용할 것
+  author: "ghpark"
+  date: "2024-12-09"
+*/
+
 function CookieMovies() {
   const userInfo = useUserStore((state) => state.getUserInfo());
   const [recommendedMovies, setRecommendedMovies] = useState([]);
+
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Cookie Movie Click", {
+      movieId,
+      movieTitle,
+      userNickname: userInfo.nickname,
+      timestamp: new Date().toISOString(),
+    });
+    navigate(`/movie/${movieId}`);
+  };
 
   if (!userInfo.userId) {
     return null;
@@ -124,7 +141,7 @@ function CookieMovies() {
         </div>
         <div className="cookie__movie">
           {recommendedMovies.map((movie, index) => (
-            <div key={index} className="cookie__movie--list">
+            <div key={index} className="cookie__movie--list" onClick={() => handleMovieClick(movie.movieId, movie.title)}>
               <img src={movie.poster} alt={movie.title} />
               <div>
                 <p>

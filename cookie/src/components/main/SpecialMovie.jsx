@@ -3,6 +3,7 @@ import styled from "styled-components";
 import specialIcon from "../../assets/images/main/special_icon.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../api/auth/axiosInstance";
+import mixpanel from "mixpanel-browser";
 
 const SpecialMovieList = styled.div`
   position: relative;
@@ -186,7 +187,14 @@ function SpecialMovie({ categorydata }) {
       .map((item) => item.subCategory);
   };
 
-  const handleMovieClick = (movieId) => {
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Special Movie Click", {
+      movieId,
+      movieTitle,
+      mainCategory: selectedMainCategory,
+      subCategory: selectedSubCategory,
+      timestamp: new Date().toISOString(),
+    });
     navigate(`/movie/${movieId}`);
   };
 
