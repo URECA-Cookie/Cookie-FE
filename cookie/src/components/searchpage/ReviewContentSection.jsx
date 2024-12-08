@@ -194,7 +194,7 @@ const ReviewContentSection = ({
   const handleEditClick = () => {
     setIsEditing(true);
     setNewContent("");
-    setNewMovieScore(cookieScoreCount); // 기존 점수로 초기화
+    setNewMovieScore(cookieScoreCount);
   };
 
   const handleManageClick = () => {
