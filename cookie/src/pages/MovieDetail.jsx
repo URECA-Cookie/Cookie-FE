@@ -17,6 +17,8 @@ const ContentWrapper = styled.div`
 
 const MovieDetail = () => {
   const { id } = useParams();
+  console.log(id);
+
   const navigate = useNavigate();
 
   const [movieData, setMovieData] = useState({});
@@ -30,16 +32,16 @@ const MovieDetail = () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
 
     fetchMovieData();
+  }, [id]);
 
-  }, [id])
+  const runtimeString = movieData.runtime
+    ? `${movieData.runtime}분`
+    : "정보 없음";
 
-  const runtimeString = movieData.runtime ? `${movieData.runtime}분` : "정보 없음";
-  
   const handleViewAllReviews = () => {
-    // /reviews/movie/:movieId로 이동
     navigate(`/reviews/movie/${id}`);
   };
 
@@ -62,19 +64,17 @@ const MovieDetail = () => {
         movie={movieData}
         liked={movieData.liked}
       />
-      <CastSection 
-        director={movieData.director}
-        actors={movieData.actors} />
+      <CastSection director={movieData.director} actors={movieData.actors} />
       <VideoSection videoUrl={movieData.video} />
       <GallerySection images={movieData.images} />
       {movieData.reviews && (
-      <ReviewSection
-        reviews={movieData.reviews}
-        reviewCount={movieData.reviews.length}
-        onViewAllReviews={handleViewAllReviews}
-        movie={movieData}
-      />
-    )}
+        <ReviewSection
+          reviews={movieData.reviews}
+          reviewCount={movieData.reviews.length}
+          onViewAllReviews={handleViewAllReviews}
+          movie={movieData}
+        />
+      )}
     </ContentWrapper>
   );
 };
