@@ -7,6 +7,7 @@ import DetailHeader from "../components/mypage/DetailHeader";
 import ReviewContentSection from "../components/searchpage/ReviewContentSection";
 import ReviewTextSection from "../components/searchpage/ReviewTextSection";
 import { FaHeart, FaComment } from "react-icons/fa";
+import useUserStore from "../stores/useUserStore";
 
 const Container = styled.div`
   padding: 20px;
@@ -20,7 +21,7 @@ const Container = styled.div`
 
 const FooterSectionStyled = styled.div`
   display: flex;
-  gap: 20px; 
+  gap: 20px;
   margin-top: 20px;
   align-items: center;
 
@@ -155,15 +156,25 @@ const ReviewDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [likedByUser, setLikedByUser] = useState(false);
 
+  const currentUserId = useUserStore((state) => state.userInfo.userId);
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const toggleLike = () => {
+    setLikedByUser((prev) => !prev);
+    setReviewData((prevData) => ({
+      ...prevData,
+      reviewLike: likedByUser
+        ? prevData.reviewLike - 1
+        : prevData.reviewLike + 1,
+    }));
+  };
 
   useEffect(() => {
     const fetchReviewData = async () => {
       try {
         const response = await axiosInstance.get(`/api/reviews/${reviewId}`);
-        const review = response.data.response;
-        setReviewData(review);
-        setLikedByUser(review.likedByUser);
+        setReviewData(response.data.response);
       } catch (error) {
         console.error("Failed to fetch review data:", error);
         toast.error("리뷰 데이터를 가져오지 못했습니다.");
@@ -175,59 +186,23 @@ const ReviewDetail = () => {
     fetchReviewData();
   }, [reviewId]);
 
-  const toggleLike = async () => {
-    const userId = getUserIdFromToken();
-    if (!userId) return;
-
-    try {
-      await axiosInstance.post(`/api/users/review-like/${reviewId}`, {
-        userId,
-      });
-
-      setReviewData((prevData) => ({
-        ...prevData,
-        likedByUser: !prevData.likedByUser,
-        reviewLike: prevData.likedByUser
-          ? prevData.reviewLike - 1
-          : prevData.reviewLike + 1,
-      }));
-    } catch (error) {
-      console.error("Failed to toggle like:", error);
-      toast.error("좋아요 처리에 실패했습니다.");
-    }
-  };
-
-  const getUserIdFromToken = () => {
-    const token = localStorage.getItem("refreshToken");
-    if (!token) {
-      toast.error("로그인이 필요한 서비스입니다.");
-      navigate("/login");
-      return null;
-    }
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.id;
-    } catch (error) {
-      console.error("Invalid token:", error);
-      toast.error("로그인 정보가 유효하지 않습니다.");
-      return null;
-    }
-  };
-
   const handleAddComment = async () => {
-    const userId = getUserIdFromToken();
-    if (!userId || !newComment.trim()) return;
+    if (!newComment.trim()) {
+      toast.error("댓글 내용을 입력하세요.");
+      return;
+    }
 
     try {
       const response = await axiosInstance.post(
         `/api/reviews/${reviewId}/comments`,
         {
-          userId,
+          userId: currentUserId,
           comment: newComment,
         }
       );
 
-      const updatedComment = response.data.response;
+      const updatedComment = response?.data?.response;
+      if (!updatedComment) throw new Error("댓글 추가에 실패했습니다.");
 
       setReviewData((prevData) => ({
         ...prevData,
@@ -235,7 +210,7 @@ const ReviewDetail = () => {
       }));
 
       toast.success("댓글이 작성되었습니다!");
-      window.location.reload();
+      setNewComment(""); // 초기화
     } catch (error) {
       console.error("Error during comment submission:", error);
       toast.error("댓글 작성에 실패했습니다.");
@@ -262,6 +237,8 @@ const ReviewDetail = () => {
         cookieScoreCount={reviewData.movieScore}
         isMenuOpen={isMenuOpen}
         toggleMenu={toggleMenu}
+        reviewId={reviewId}
+        userId={reviewData.user.userId}
       />
       <ReviewTextSection reviewText={reviewData.content} />
       <FooterSectionStyled>
@@ -274,9 +251,10 @@ const ReviewDetail = () => {
         </div>
         <div className="icon-container">
           <FaComment />
-          <span>{reviewData.comments.length}</span>
+          <span>{reviewData.comments?.length || 0}</span>
         </div>
       </FooterSectionStyled>
+
       <CommentsSectionContainer>
         <h3>Comment</h3>
         <div className="comment-input">
@@ -289,8 +267,9 @@ const ReviewDetail = () => {
           />
           <button onClick={handleAddComment}>↑</button>
         </div>
-        {reviewData.comments.map((comment) => (
-          <div className="comment" key={comment.id}>
+
+        {reviewData.comments?.map((comment) => (
+          <div className="comment" key={comment.commentId}>
             <div className="comment-left">
               <img
                 src={comment.user.profileImage}
@@ -298,41 +277,25 @@ const ReviewDetail = () => {
               />
               <div className="comment-content">
                 <div className="nickname">{comment.user.nickname}</div>
-                {editingCommentId === comment.id ? (
-                  <input
-                    type="text"
-                    value={editingCommentText}
-                    onChange={(e) => setEditingCommentText(e.target.value)}
-                  />
-                ) : (
-                  <div className="text">{comment.comment}</div>
-                )}
+                <div className="text">{comment.comment}</div>
                 <div className="date">
                   {new Date(comment.createdAt).toLocaleString()}
                 </div>
               </div>
             </div>
-            {comment.user.id === getUserIdFromToken() && (
+            {comment.user.userId === currentUserId && (
               <div className="comment-actions">
-                {editingCommentId === comment.id ? (
-                  <button onClick={() => handleEditComment(comment.id)}>
-                    저장
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => {
-                        setEditingCommentId(comment.id);
-                        setEditingCommentText(comment.comment);
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button onClick={() => handleDeleteComment(comment.id)}>
-                      삭제
-                    </button>
-                  </>
-                )}
+                <button
+                  onClick={() => {
+                    setEditingCommentId(comment.commentId);
+                    setEditingCommentText(comment.comment);
+                  }}
+                >
+                  수정
+                </button>
+                <button onClick={() => handleDeleteComment(comment.commentId)}>
+                  삭제
+                </button>
               </div>
             )}
           </div>
