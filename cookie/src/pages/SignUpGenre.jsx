@@ -8,6 +8,7 @@ import useUserStore from "../stores/useUserStore";
 import axios from "axios";
 import useAuthStore from "../stores/useAuthStore";
 import Spinner from "../components/common/Spinner";
+import mixpanel from "mixpanel-browser";
 
 const MainContainer = styled.div`
   background-color: #fff4b9;
@@ -135,6 +136,23 @@ function SignUpGenre() {
     setSelectedGenreId(id);
   };
 
+  // Mixpanel 사용자 등록 함수
+  const onSignupSuccess = (newUser) => {
+    mixpanel.identify(newUser.userId); // Mixpanel에 사용자 ID 설정
+    mixpanel.people.set({
+      $email: newUser.email, // 사용자 이메일
+      $name: newUser.nickname, // 사용자 이름
+      $created: new Date(), // 현재 시각 (가입 시각)
+      $genre: newUser.genreId, // 선호 장르 ID
+    });
+
+    mixpanel.track("User Signed Up", {
+      genreId: newUser.genreId, // 선호 장르
+    });
+
+    console.log("회원가입 사용자 Mixpanel 등록 완료");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedGenreId) {
@@ -185,6 +203,10 @@ function SignUpGenre() {
           response.data.response.token.accessToken
         );
         const userResponse = response.data.response.user;
+
+        // Mixpanel 사용자 등록 함수 호출
+        onSignupSuccess(userResponse);
+
         const setUserInfo = useUserStore.getState().setUserInfo;
         const userInfo = {
           userId: userResponse.userId,
