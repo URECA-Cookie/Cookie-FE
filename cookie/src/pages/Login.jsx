@@ -4,6 +4,8 @@ import CookieLogo from "../assets/images/login/cookie_lg.svg";
 import styled from "styled-components";
 import { OAuth_LOGIN_PROVIDER } from "../config/OAuthConfig";
 import { useNavigate } from "react-router-dom";
+import mixpanel from "mixpanel-browser";
+import axiosInstance from "../api/auth/axiosInstance";
 
 export const LoginContainer = styled.div`
   background-color: #fff4b9;
@@ -86,12 +88,44 @@ const GuestLink = styled.div`
 function Login() {
   const navigate = useNavigate();
 
-  const handleLoginClick = (url) => {
+  const handleLoginClick = async (url) => {
     window.location.href = url;
+    try {
+      // 로그인 요청 후 유저 정보 받아오기
+      const response = await axiosInstance.get(`/api/users/info`, {
+        withCredentials: true, // 쿠키 인증 정보 포함
+      });
+      const user = response.data; // 유저 정보
+
+      // Mixpanel에 로그인 성공 정보 등록
+      onLoginSuccess(user);
+
+      // 메인 페이지로 이동
+      navigate("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
   };
 
   const handleGuestAccess = () => {
     navigate("/");
+  };
+
+  const onLoginSuccess = (user) => {
+    mixpanel.identify(user.id); // Mixpanel에 사용자 고유 ID 설정
+    mixpanel.people.set({
+      $email: user.email, // 사용자 이메일
+      $name: user.nickname, // 사용자 이름
+      $created: user.createdAt, // 가입 날짜
+      favorite_genre: user.genreId, // 선호 장르
+    });
+
+    mixpanel.track("User Logged In", {
+      userId: user.id,
+      loginMethod: user.socialProvider, // 로그인 제공자 정보
+    });
+
+    console.log("Mixpanel 로그인 추적 완료");
   };
 
   return (
