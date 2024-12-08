@@ -187,7 +187,7 @@ const MyPage = () => {
           <FavoriteList title="좋아요" items={favoriteItems} />
           <ReviewHeader>
             <ReviewTitle>{`${userData.nickname}의 리뷰`}</ReviewTitle>
-            <MoreLink onClick={handleMoreClick}>{"> 더보기"}</MoreLink>
+            <MoreLink onClick={handleMoreClick}>{" 더보기"}</MoreLink>
           </ReviewHeader>
           <ReviewList reviews={reviewData} />
           {isLogined() && (
