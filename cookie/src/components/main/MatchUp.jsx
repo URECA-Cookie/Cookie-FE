@@ -5,6 +5,7 @@ import fight from "../../assets/images/main/fight_icon.svg";
 import { useNavigate } from "react-router-dom";
 import serverBaseUrl from "../../config/apiConfig";
 import axiosInstance from "../../api/auth/axiosInstance";
+import mixpanel from "mixpanel-browser";
 
 const MatchUpContainer = styled.div`
   position: relative;
@@ -234,6 +235,16 @@ function MatchUp() {
     fetchMainPageMovies();
   }, []);
 
+  const handleVoteClick = (matchUpId, matchUpTitle) => {
+    mixpanel.track("MatchUp Vote Click", {
+      matchUpId,
+      matchUpTitle,
+      timestamp: new Date().toISOString(),
+    });
+
+    navigate(`/matchup/${matchUpId}`);
+  };
+
   const getDisplayText = () => {
     if (leftDays === 0) {
       return "D-DAY";
@@ -259,7 +270,9 @@ function MatchUp() {
             />
             <div className="matchUp__overlay">
               <button
-                onClick={() => navigate(`/matchup/${matchUp.matchUpId}`)}
+                onClick={() =>
+                  handleVoteClick(matchUp.matchUpId, matchUp.matchUpTitle)
+                }
                 disabled={!access}
               >
                 {access
