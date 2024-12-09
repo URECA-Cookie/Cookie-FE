@@ -101,7 +101,7 @@ function CookieMovies() {
       if (userInfo?.userId) {
         try {
           const response = await axiosInstance.get(
-            `${serverBaseUrl}/api/movies/${userInfo.userId}/recommendations`
+            `${serverBaseUrl}/api/movies/recommendations`
           );
           const movies = response.data.response || [];
           setRecommendedMovies(movies);
