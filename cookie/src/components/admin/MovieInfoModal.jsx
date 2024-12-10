@@ -15,6 +15,9 @@ import {
   MovieTitle,
   SubmitBtn,
 } from "./SearchMovieDetail";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../api/auth/axiosInstance";
+import serverBaseUrl from "../../config/apiConfig";
 
 const Overlay = styled.div`
   position: fixed;
@@ -31,12 +34,13 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  width: 1450px;
+  width: 1650px;
   height: 800px;
   z-index: 1000;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(35, 35, 35, 0.1);
-  overflow: auto;
+  overflow: scroll;
+  padding: 0 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -47,7 +51,27 @@ const ButtonContainer = styled.div`
   transform: translateX(-50%);
 `;
 
-const MovieInfoModal = ({ movie, onClose }) => {
+const MovieInfoModal = ({ movieId, onClose }) => {
+  const [movie, setMovie] = useState(null);
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/api/admin/movie/${movieId}/detail`
+        );
+        console.log(response);
+        setMovie(response.data.response);
+      } catch (error) {
+        console.error("영화 정보를 불러오는 데 실패했습니다.", error);
+      }
+    };
+
+    if (movieId) {
+      fetchMovieDetails();
+    }
+  }, [movieId]);
+
   if (!movie) return null;
 
   return (
@@ -57,7 +81,11 @@ const MovieInfoModal = ({ movie, onClose }) => {
         <MovieDetail>
           <MovieContainer key={movie.movieId}>
             <MovieRow>
-              <img src={movie.posterPath} alt={movie.title} />
+              <img
+                className="movie__poster"
+                src={movie.posterPath}
+                alt={movie.title}
+              />
               <MovieInfo>
                 <MovieTitle>{movie.title}</MovieTitle>
 
@@ -67,7 +95,12 @@ const MovieInfoModal = ({ movie, onClose }) => {
                   { label: "연령", value: movie.certification },
                   { label: "국가", value: movie.country },
                   { label: "줄거리", value: movie.plot },
-                  { label: "카테고리", value: movie.categories.join(", ") },
+                  {
+                    label: "카테고리",
+                    value: Array.isArray(movie.categories)
+                      ? movie.categories.join(", ")
+                      : "카테고리 정보 없음",
+                  },
                 ].map((section, index) => (
                   <MovieInfoSection key={index} label={section.label}>
                     {section.value}
@@ -75,13 +108,17 @@ const MovieInfoModal = ({ movie, onClose }) => {
                 ))}
 
                 <MovieInfoSection label="감독">
-                  <ActorItem actor={movie.director} />
+                  <ActorItem actor={movie.director || "감독 정보 없음"} />
                 </MovieInfoSection>
 
                 <MovieInfoSection label="배우">
-                  {movie.actors.map((actor, index) => (
-                    <ActorItem key={index} actor={actor} />
-                  ))}
+                  {Array.isArray(movie.actors) && movie.actors.length > 0 ? (
+                    movie.actors.map((actor, index) => (
+                      <ActorItem key={index} actor={actor} />
+                    ))
+                  ) : (
+                    <p>배우 정보 없음</p>
+                  )}
                 </MovieInfoSection>
               </MovieInfo>
             </MovieRow>
@@ -103,13 +140,23 @@ const MovieInfoModal = ({ movie, onClose }) => {
               </MovieInfoSection>
 
               <MovieInfoSection label="스틸컷">
-                {movie?.stillCuts && movie.stillCuts.length > 0
-                  ? movie.stillCuts.map((image, index) => (
-                      <StillCutContainer key={index}>
-                        <SitllCut src={image} alt={`Still cut ${index + 1}`} />
-                      </StillCutContainer>
-                    ))
-                  : null}
+                {Array.isArray(movie.stillCuts) &&
+                movie.stillCuts.length > 0 ? (
+                  movie.stillCuts.map((image, index) => (
+                    <StillCutContainer
+                      key={index}
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        width: "80%",
+                      }}
+                    >
+                      <SitllCut src={image} alt={`Still cut ${index + 1}`} />
+                    </StillCutContainer>
+                  ))
+                ) : (
+                  <p>스틸컷 정보 없음</p>
+                )}
               </MovieInfoSection>
             </YoutubeAndStillCutContainer>
             <ButtonContainer>
