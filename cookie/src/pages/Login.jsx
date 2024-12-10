@@ -66,11 +66,12 @@ export const LoginBtn = styled.div`
 
 const GuestLink = styled.div`
   position: absolute;
-  top: 5rem;
+  top: 4rem;
   right: 1rem;
   font-size: 1rem;
-  color: #724b2e;
+  color: var(--text);
   text-decoration: underline;
+  text-underline-offset: 0.2rem;
   cursor: pointer;
 
   &:hover {
@@ -90,15 +91,15 @@ function Login() {
     window.location.href = url;
   };
 
-  const handleGuestAccess = () => {
-    navigate("/");
-  };
+  // const handleGuestAccess = () => {
+  //   navigate("/");
+  // };
 
   return (
     <>
       <GlobalStyle />
       <LoginContainer>
-        <GuestLink onClick={handleGuestAccess}>비회원으로 이용하기</GuestLink>
+        {/* <GuestLink onClick={handleGuestAccess}>비회원으로 이용하기</GuestLink> */}
         <h2 className="regular">“영화 리뷰와 투표, 영화 vs 영화 토론까지!</h2>
         <h2 className="regular">영화 팬들을 위한 종합 커뮤니티”</h2>
         <img className="login__img logo" src={CookieLogo} alt="logo" />
