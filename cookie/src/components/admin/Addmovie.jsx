@@ -2,12 +2,14 @@ import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import SearchMovieDetail from "./SearchMovieDetail";
-import SearchMovieList from "./SearchMovieList";
-import useAdminMovieStore from "../../stores/useAdminMovieStore";
+// import SearchMovieList from "./SearchMovieList";
+// import useAdminMovieStore from "../../stores/useAdminMovieStore";
+import axiosInstance from "../../api/auth/axiosInstance";
+import serverBaseUrl from "../../config/apiConfig";
 
 const AddMovieContainer = styled.div`
   width: 1239px;
-  height: 840px;
+  height: 1030px;
   border: none;
   padding: 1rem;
   border-radius: 12px;
@@ -86,44 +88,110 @@ export const SearchTitle = styled.div`
   }
 `;
 
-const Addmovie = () => {
-  const {
-    searchTerm,
-    setSearchTerm,
-    filteredMovies,
-    setFilteredMovies,
-    movieList,
-    selectedMovie,
-    setSelectedMovie,
-    setIsSelected,
-  } = useAdminMovieStore();
+const SearchedMovie = styled.div`
+  margin-top: 16px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: center;
+  margin: 0 3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 790px;
 
-  useEffect(() => {
-    setFilteredMovies(movieList);
-  }, [movieList]);
+  .movie__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 170px;
+    min-height: 230px;
+    margin-bottom: 10px;
+  }
 
-  const handleSearch = (e) => {
-    const searchInput = e.target.value;
-    setSearchTerm(searchInput);
+  .movie__info {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 125px;
+  }
 
-    const filtered = movieList.filter((movie) => {
-      const movieTitle = movie.title.toLowerCase();
-      const searchQuery = searchInput.toLowerCase();
+  h3 {
+    margin: 8px 0 0 0;
+    color: var(--text);
+  }
+  img {
+    border-radius: 10px;
+    width: 124px;
+    height: 177px;
+  }
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text);
+    grid-column: 5 / 6;
+    justify-self: end;
+    padding: 0 1rem;
+  }
+  button:hover {
+    text-decoration: underline;
+  }
+`;
+function AddMovie() {
+  const [movies, setMovies] = useState([]); // 검색된 영화 목록 상태
+  // const [visibleCount, setVisibleCount] = useState(10); // 보이는 영화 개수
+  const [selectedMovie, setSelectedMovie] = useState(null); // 선택된 영화 상태
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-      return movieTitle.includes(searchQuery);
-    });
-    setFilteredMovies(filtered);
+  const handleSearch = () => {
+    if (isSearching || searchTerm.trim() === "") return;
+
+    setIsSearching(true);
+    axiosInstance
+      .get(`/api/admin/movie/tmdb/${encodeURIComponent(searchTerm)}`)
+      .then((response) => {
+        console.log("API응답:", response);
+        const movieData = Array.isArray(response.data.response)
+          ? response.data.response
+          : [];
+        setMovies(movieData);
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
+      });
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const handleMovieClick = (movieId) => {
-    setSelectedMovie(movieId);
-    setIsSelected(true);
+    axiosInstance
+      .get(`/api/admin/movie/tmdb/choice/${movieId}`, movieId)
+      .then((response) => {
+        const movieDetails = response.data.response;
+        setSelectedMovie(movieDetails);
+      })
+
+      .catch((error) => {
+        console.error("API Error:", error);
+      });
   };
 
   const handleGoBack = () => {
     setSelectedMovie(null);
     setIsSelected(false);
   };
+
+  // const onShowMore = () => {
+  //   setVisibleCount((prevCount) => prevCount + 10);
+  // };
+  // const visibleMovies = movies.slice(0, visibleCount);
 
   return (
     <AddMovieContainer>
@@ -138,22 +206,52 @@ const Addmovie = () => {
             <SearchInput
               placeholder="영화 제목을 입력하세요"
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
-            <SearchIconButton type="button" aria-label="검색">
+            <SearchIconButton
+              type="button"
+              aria-label="검색"
+              onClick={handleSearch}
+            >
               <SearchIcon />
             </SearchIconButton>
           </SearchBarContainer>
+
           <SearchTitle>
             <p>검색된 영화</p>
           </SearchTitle>
-          <SearchMovieList
-            movies={filteredMovies}
-            onMovieClick={handleMovieClick}
-          />
+
+          <SearchedMovie>
+            {movies.length > 0 ? (
+              movies.map((movie) => (
+                <div key={movie.movieId} className="movie__container">
+                  <div
+                    className="movie__info"
+                    onClick={() => handleMovieClick(movie.movieId)}
+                  >
+                    <img src={movie.posterPath} alt={movie.title} />
+                    <h3>{movie.title}</h3>
+                    {/* <p>
+                      {movie.releaseDate} | {movie.country}
+                    </p> */}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>검색한 영화가 없어요</p>
+            )}
+          </SearchedMovie>
+
+          {/* {movies.length > visibleCount && (
+            <button onClick={onShowMore} className="show-more-button">
+              더 보기
+            </button>
+          )} */}
         </>
       )}
     </AddMovieContainer>
   );
-};
-export default Addmovie;
+}
+
+export default AddMovie;
