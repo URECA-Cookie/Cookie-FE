@@ -9,7 +9,7 @@ const NumberBtn = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: var(--cookie);
+    color: var(--sub);
   }
 `;
 const PaginationContainer = styled.div`
