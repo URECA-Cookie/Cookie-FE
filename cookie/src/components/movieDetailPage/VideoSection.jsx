@@ -27,6 +27,31 @@ const VideoWrapper = styled.div`
         object-fit: cover;
       }
 
+      .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+
+        &::before {
+          content: "";
+          display: block;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 10px 0 10px 15px;
+          border-color: transparent transparent transparent white;
+        }
+      }
+
       .video-title {
         text-align: center;
         margin-top: 8px;
@@ -52,6 +77,7 @@ const VideoSection = ({ videoUrl }) => {
             src={`https://img.youtube.com/vi/${videoId}/0.jpg`}
             alt="Video Thumbnail"
           />
+          <div className="play-icon"></div>
         </div>
       </div>
     </VideoWrapper>

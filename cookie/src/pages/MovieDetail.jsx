@@ -21,6 +21,8 @@ const MovieDetail = () => {
   const navigate = useNavigate();
 
   const [movieData, setMovieData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [selectedImage, setSelectedImage] = useState(""); // 클릭된 이미지
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -42,6 +44,12 @@ const MovieDetail = () => {
   const handleViewAllReviews = () => {
     // /reviews/movie/:movieId로 이동
     navigate(`/reviews/movie/${id}`);
+  };
+
+  // 이미지 클릭 핸들러
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
   };
 
   return (
@@ -68,7 +76,7 @@ const MovieDetail = () => {
         director={movieData.director}
         actors={movieData.actors} />
       <VideoSection videoUrl={movieData.video} />
-      <GallerySection images={movieData.images} />
+      <GallerySection images={movieData.images} onImageClick={handleImageClick} />
       {movieData.reviews && (
       <ReviewSection
         reviews={movieData.reviews}
