@@ -6,24 +6,24 @@ import movie from "../../assets/images/admin/cookieMovie.svg";
 import cookieSm from "../../assets/images/admin/cookie_sm.svg";
 import CookieMovieList from "../../components/admin/CookieMovieList";
 
-const Viewport = styled.div`
+export const Viewport = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
 
-const TabBtnContainer = styled.div`
+export const TabBtnContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   margin: 2rem 0 -0.9rem 0;
 `;
-const TabBtn = styled.button`
+export const TabBtn = styled.button`
   padding: 0.5rem 1.25rem;
   border: none;
   border-radius: 8px;
-  width: 150px;
+  width: 160px;
   height: 75px;
   font-size: 20px;
   font-weight: 700;

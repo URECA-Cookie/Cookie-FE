@@ -10,8 +10,6 @@ import More from "../../assets/images/admin/more.svg";
 import MovieInfoModal from "./MovieInfoModal";
 import EditCategory from "./EditCategory";
 import axiosInstance from "../../api/auth/axiosInstance";
-import serverBaseUrl from "../../config/apiConfig";
-import axios from "axios";
 
 const AddMovieContainer = styled.div`
   width: 1239px;
@@ -27,7 +25,7 @@ const AddMovieContainer = styled.div`
     -3px 4px 8px rgba(0, 0, 0, 0.06),
     3px -4px 8px rgba(0, 0, 0, 0.06);
 `;
-const TableTitle = styled.div`
+export const TableTitle = styled.div`
   width: 1175px;
   height: 32px;
   border: none;
@@ -50,7 +48,7 @@ const TableTitle = styled.div`
   }
 `;
 
-const MovieListContainer = styled.div`
+export const MovieListContainer = styled.div`
   padding: 1rem 3rem;
   display: grid;
   grid-template-columns: 0.1fr 2fr 0.5fr 1fr 1.5fr 3fr 0.8fr;
@@ -186,6 +184,7 @@ const CookieMovieList = () => {
     }
   };
 
+  //등록된 영화목록
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -376,7 +375,7 @@ const CookieMovieList = () => {
         </TableTitle>
         <MovieListContainer>
           {loading ? (
-            <p>Loading...</p>
+            <p></p>
           ) : Array.isArray(registeredMovies) && registeredMovies.length > 0 ? (
             registeredMovies.map((movie) => (
               <React.Fragment key={movie.movieId}>

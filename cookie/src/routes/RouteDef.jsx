@@ -24,6 +24,7 @@ import AdminMovie from "../pages/admin/AdminMovie";
 import CastDetail from "../components/movieDetailPage/CastDetail";
 import ErrorPage from "../pages/ErrorPage";
 import MyAllReviewList from "../pages/MyAllReviewList";
+import AdminReviewLike from "../pages/admin/AdminReviewLike";
 
 export const AppRouteDef = {
   Main: {
@@ -244,6 +245,14 @@ export const AppRouteDef = {
     element: (
       <PrivateRoute>
         <CastDetail />
+      </PrivateRoute>
+    ),
+  },
+  AdminReviewLikes: {
+    path: "/admin/reviews-likes",
+    element: (
+      <PrivateRoute>
+        <AdminReviewLike />
       </PrivateRoute>
     ),
   },

@@ -5,7 +5,7 @@ import SearchMovieDetail from "./SearchMovieDetail";
 import axiosInstance from "../../api/auth/axiosInstance";
 import serverBaseUrl from "../../config/apiConfig";
 
-const AddMovieContainer = styled.div`
+export const DefalutContainer = styled.div`
   width: 1239px;
   height: 1030px;
   border: none;
@@ -193,7 +193,7 @@ function AddMovie() {
   // const visibleMovies = movies.slice(0, visibleCount);
 
   return (
-    <AddMovieContainer>
+    <DefalutContainer>
       {selectedMovie ? (
         <SearchMovieDetail
           selectedMovie={selectedMovie}
@@ -249,7 +249,7 @@ function AddMovie() {
           )} */}
         </>
       )}
-    </AddMovieContainer>
+    </DefalutContainer>
   );
 }
 
