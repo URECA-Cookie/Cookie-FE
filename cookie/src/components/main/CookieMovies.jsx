@@ -4,6 +4,14 @@ import useUserStore from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/auth/axiosInstance";
 import useAuthStore from "../../stores/useAuthStore";
+import serverBaseUrl from "../../config/apiConfig";
+import mixpanel from "mixpanel-browser";
+
+/*
+  이 파트는 onClick 이벤트 구현이 안되어 있어 디벨롭 업데이트 확인하는대로 맞춰서 믹스패널 설정 다시 적용할 것
+  author: "ghpark"
+  date: "2024-12-09"
+*/
 
 function CookieMovies() {
   const navigate = useNavigate();
@@ -32,18 +40,27 @@ function CookieMovies() {
     fetchRecommendedMovies();
   }, [isLoggedIn]);
 
-  const handleMovieClick = (movieId) => {
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Cookie Movie Click", {
+      movieId,
+      movieTitle,
+      userNickname: userInfo.nickname,
+      timestamp: new Date().toISOString(),
+    });
     navigate(`/movie/${movieId}`);
   };
+
   const handleNext = () => {
     setCurrentIndex(currentIndex + 1);
   };
+
   const handlePrev = () => {
     console.log("Current Index:", currentIndex);
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     }
   };
+
   return (
     <>
       <CookieMovieList>

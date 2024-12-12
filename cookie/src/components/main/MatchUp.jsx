@@ -5,6 +5,8 @@ import fight from "../../assets/images/main/fight_icon.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import serverBaseUrl from "../../config/apiConfig";
+import axiosInstance from "../../api/auth/axiosInstance";
+import mixpanel from "mixpanel-browser";
 
 const MatchUpContainer = styled.div`
   position: relative;
@@ -195,6 +197,7 @@ const MatchUpContainer = styled.div`
     }
   }
 `;
+
 const SkeletonContainer = styled.div`
   border-radius: 0.75rem;
   width: 260px;
@@ -264,6 +267,17 @@ function MatchUp() {
   //   }
   // };
   // {getDisplayText()}
+
+  const handleVoteClick = (matchUpId, matchUpTitle) => {
+    mixpanel.track("MatchUp Vote Click", {
+      matchUpId,
+      matchUpTitle,
+      timestamp: new Date().toISOString(),
+    });
+
+    navigate(`/matchup/${matchUpId}`);
+  };
+
   return (
     <MatchUpContainer>
       <div className="matchUp__title">

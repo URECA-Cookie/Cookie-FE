@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import serverBaseUrl from "../../config/apiConfig";
 import axios from "axios";
+import mixpanel from "mixpanel-browser";
 
 function SpecialMovie({ categorydata }) {
   const filteredCategoryData = categorydata.filter(
@@ -60,7 +61,14 @@ function SpecialMovie({ categorydata }) {
       .map((item) => item.subCategory);
   };
 
-  const handleMovieClick = (movieId) => {
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Special Movie Click", {
+      movieId,
+      movieTitle,
+      mainCategory: selectedMainCategory,
+      subCategory: selectedSubCategory,
+      timestamp: new Date().toISOString(),
+    });
     navigate(`/movie/${movieId}`);
   };
 
@@ -98,6 +106,7 @@ function SpecialMovie({ categorydata }) {
       setCurrentIndex(currentIndex - 1);
     }
   };
+  
   return (
     <>
       <SpecialMovieList>

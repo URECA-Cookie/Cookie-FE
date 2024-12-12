@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import serverBaseUrl from "../../config/apiConfig";
+import mixpanel from "mixpanel-browser";
 
 function GenreMovie({ categorydata }) {
   const [selectedMainCategory] = useState("장르");
@@ -70,11 +71,19 @@ function GenreMovie({ categorydata }) {
     setCurrentPage(1);
     setSelectedPage(1);
   };
+
   const handlePageClick = (page) => {
     setCurrentPage(page);
     setSelectedPage(page);
   };
-  const handleMovieClick = (id) => {
+
+  const handleMovieClick = (id, title) => {
+    mixpanel.track("Genre Movie Click", {
+      id,
+      title,
+      genre: selectedGenre,
+      timestamp: new Date().toISOString(),
+    });
     navigate(`/movie/${id}`);
   };
 

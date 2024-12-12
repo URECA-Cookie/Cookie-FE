@@ -1694,6 +1694,11 @@
   resolved "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.26.0.tgz"
   integrity sha512-ErTASs8YKbqTBoPLp/kA1B1Um5YSom8QAc4rKhg7b9tyyVqDBlQxy7Bf2wW7yIlPGPg2UODDQcbkTlruPzDosw==
 
+"@rrweb/types@^2.0.0-alpha.13":
+  version "2.0.0-alpha.18"
+  resolved "https://registry.npmjs.org/@rrweb/types/-/types-2.0.0-alpha.18.tgz"
+  integrity sha512-iMH3amHthJZ9x3gGmBPmdfim7wLGygC2GciIkw2A6SO8giSn8PHYtRT8OKNH4V+k3SZ6RSnYHcTQxBA7pSWZ3Q==
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.npmjs.org/@sinclair/typebox/-/typebox-0.27.8.tgz"
@@ -1746,6 +1751,11 @@
   integrity sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==
   dependencies:
     "@babel/types" "^7.20.7"
+
+"@types/css-font-loading-module@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@types/css-font-loading-module/-/css-font-loading-module-0.0.7.tgz"
+  integrity sha512-nl09VhutdjINdWyXxHWN/w9zlNCfr60JUqJbd24YXUuCwgeL0TpFSdElCwb6cxfB6ybE19Gjj4g0jsgkXxKv1Q==
 
 "@types/d3-array@^3.0.3":
   version "3.2.1"
@@ -1928,6 +1938,11 @@
     "@babel/plugin-transform-react-jsx-source" "^7.24.7"
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.14.2"
+
+"@xstate/fsm@^1.4.0":
+  version "1.6.5"
+  resolved "https://registry.npmjs.org/@xstate/fsm/-/fsm-1.6.5.tgz"
+  integrity sha512-b5o1I6aLNeYlU/3CPlj/Z91ybk1gUsKT+5NAJI+2W4UjvS5KLG28K9v5UvNoFVjHV8PajVZ00RH3vnjyQO7ZAw==
 
 acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -2141,6 +2156,11 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+base64-arraybuffer@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz"
+  integrity sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -2912,6 +2932,11 @@ fdir@^6.4.2:
   version "6.4.2"
   resolved "https://registry.npmjs.org/fdir/-/fdir-6.4.2.tgz"
   integrity sha512-KnhMXsKSPZlAhp7+IjUkRZKPb4fUyccpDrdFXbi4QL1qkmFh9kVY09Yox+n4MaOb3lHZ1Tv829C3oaaXoMYPDQ==
+
+fflate@^0.4.4:
+  version "0.4.8"
+  resolved "https://registry.npmjs.org/fflate/-/fflate-0.4.8.tgz"
+  integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -3752,6 +3777,18 @@ minimatch@9.0.3:
   dependencies:
     brace-expansion "^2.0.1"
 
+mitt@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/mitt/-/mitt-3.0.1.tgz"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
+mixpanel-browser@^2.56.0:
+  version "2.56.0"
+  resolved "https://registry.npmjs.org/mixpanel-browser/-/mixpanel-browser-2.56.0.tgz"
+  integrity sha512-GYeEz58pV2M9MZtK8vSPL4oJmCwGS08FDDRZvZwr5VJpWdT4Lgyg6zXhmNfCmSTEIw2coaarm7HZ4FL9dAVvnA==
+  dependencies:
+    rrweb "2.0.0-alpha.13"
+
 ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
   resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
@@ -3925,7 +3962,7 @@ postcss-value-parser@^4.0.2:
   resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.43:
+postcss@^8.4.38, postcss@^8.4.43:
   version "8.4.49"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.49.tgz"
   integrity sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==
@@ -4370,6 +4407,34 @@ rollup@^1.20.0||^2.0.0||^3.0.0||^4.0.0, rollup@^2.0.0||^3.0.0||^4.0.0, rollup@^2
     "@rollup/rollup-win32-ia32-msvc" "4.26.0"
     "@rollup/rollup-win32-x64-msvc" "4.26.0"
     fsevents "~2.3.2"
+
+rrdom@^2.0.0-alpha.13:
+  version "2.0.0-alpha.18"
+  resolved "https://registry.npmjs.org/rrdom/-/rrdom-2.0.0-alpha.18.tgz"
+  integrity sha512-fSFzFFxbqAViITyYVA4Z0o5G6p1nEqEr/N8vdgSKie9Rn0FJxDSNJgjV0yiCIzcDs0QR+hpvgFhpbdZ6JIr5Nw==
+  dependencies:
+    rrweb-snapshot "^2.0.0-alpha.18"
+
+rrweb-snapshot@^2.0.0-alpha.13, rrweb-snapshot@^2.0.0-alpha.18:
+  version "2.0.0-alpha.18"
+  resolved "https://registry.npmjs.org/rrweb-snapshot/-/rrweb-snapshot-2.0.0-alpha.18.tgz"
+  integrity sha512-hBHZL/NfgQX6wO1D9mpwqFu1NJPpim+moIcKhFEjVTZVRUfCln+LOugRc4teVTCISYHN8Cw5e2iNTWCSm+SkoA==
+  dependencies:
+    postcss "^8.4.38"
+
+rrweb@2.0.0-alpha.13:
+  version "2.0.0-alpha.13"
+  resolved "https://registry.npmjs.org/rrweb/-/rrweb-2.0.0-alpha.13.tgz"
+  integrity sha512-a8GXOCnzWHNaVZPa7hsrLZtNZ3CGjiL+YrkpLo0TfmxGLhjNZbWY2r7pE06p+FcjFNlgUVTmFrSJbK3kO7yxvw==
+  dependencies:
+    "@rrweb/types" "^2.0.0-alpha.13"
+    "@types/css-font-loading-module" "0.0.7"
+    "@xstate/fsm" "^1.4.0"
+    base64-arraybuffer "^1.0.1"
+    fflate "^0.4.4"
+    mitt "^3.0.0"
+    rrdom "^2.0.0-alpha.13"
+    rrweb-snapshot "^2.0.0-alpha.13"
 
 run-parallel@^1.1.9:
   version "1.2.0"

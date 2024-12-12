@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import serverBaseUrl from "../../config/apiConfig";
 import axios from "axios";
+import mixpanel from "mixpanel-browser";
 
 function AdminRecommend() {
   const navigate = useNavigate();
@@ -28,12 +29,20 @@ function AdminRecommend() {
     fetchMainPageMovies();
   }, []);
 
-  const handleMovieClick = (movieId) => {
+  const handleMovieClick = (movieId, movieTitle) => {
+    mixpanel.track("Admin Recommended Movie Click", {
+      movieId,
+      movieTitle,
+      timestamp: new Date().toISOString(),
+    });
+
     navigate(`/movie/${movieId}`);
   };
+
   const handleNext = () => {
     setCurrentIndex(currentIndex + 1);
   };
+  
   const handlePrev = () => {
     console.log("Current Index:", currentIndex);
     if (currentIndex > 0) {
