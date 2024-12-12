@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import specialIcon from "../../assets/images/main/special_icon.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosInstance from "../../api/auth/axiosInstance";
 import serverBaseUrl from "../../config/apiConfig";
 import axios from "axios";
 
