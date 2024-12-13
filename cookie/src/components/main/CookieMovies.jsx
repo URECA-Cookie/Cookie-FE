@@ -4,6 +4,7 @@ import useUserStore from "../../stores/useUserStore";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/auth/axiosInstance";
 import useAuthStore from "../../stores/useAuthStore";
+import { SkeletonOverlay } from "./AdminRecommend";
 
 function CookieMovies() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function CookieMovies() {
   const userInfo = useUserStore((state) => state.getUserInfo());
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const moviesPerPage = 4;
+  const [isLoading, setIsLoading] = useState(true);
 
   if (!userInfo?.nickname) {
     return null;
@@ -19,6 +20,7 @@ function CookieMovies() {
 
   useEffect(() => {
     const fetchRecommendedMovies = async () => {
+      setIsLoading(true);
       try {
         const response = await axiosInstance.get(`/api/movies/recommendations`);
         const movies = response.data.response || [];
@@ -26,6 +28,8 @@ function CookieMovies() {
         setRecommendedMovies(movies);
       } catch (error) {
         console.error("영화 추천 목록을 가져오는 데 실패했습니다.", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -70,7 +74,11 @@ function CookieMovies() {
                   onClick={() => handleMovieClick(movie.id)}
                   style={{ cursor: "pointer" }}
                 >
-                  <Poster src={movie.poster} alt={movie.title} />
+                  {isLoading ? (
+                    <SkeletonOverlay />
+                  ) : (
+                    <Poster src={movie.poster} alt={movie.title} />
+                  )}
                   <MovieInfo>
                     <Review>
                       <ReviewIcon alt="Review Icon" />
@@ -215,7 +223,12 @@ const Poster = styled.img`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0.3rem;
-    width: 6.4rem;
-    height: 9.5rem;
+    width: 6.2rem;
+    height: 9.3rem;
+  }
+  @media (max-width: 390px) {
+    padding: 0.4rem 0.3rem;
+    width: 5.6rem;
+    height: 8.7rem;
   }
 `;

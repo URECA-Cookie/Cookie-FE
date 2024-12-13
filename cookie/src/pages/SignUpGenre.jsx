@@ -81,8 +81,12 @@ const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 13rem;
+
   @media (max-width: 768px) {
-    margin-top: 10rem;
+    margin-top: 9rem;
+  }
+  @media (max-width: 390px) {
+    margin-top: 6.5rem;
   }
   button {
     background-color: #aad6e7;

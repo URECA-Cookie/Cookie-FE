@@ -14,6 +14,8 @@ function SpecialMovie({ categorydata }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
   const moviesPerSlide = 4;
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ function SpecialMovie({ categorydata }) {
     if (!mainCategory || !subCategory) return;
     const cacheKey = `${mainCategory}_${subCategory}`;
     const cachedMovies = localStorage.getItem(cacheKey);
-
+    setIsLoading(true);
     if (cachedMovies) {
       setMovies(JSON.parse(cachedMovies));
     } else {
@@ -50,6 +52,8 @@ function SpecialMovie({ categorydata }) {
         localStorage.setItem(cacheKey, JSON.stringify(response.data.movies));
       } catch (error) {
         console.error("영화 불러오기 실패:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -169,7 +173,11 @@ function SpecialMovie({ categorydata }) {
                   className="specialMovie__list--info"
                   onClick={() => handleMovieClick(movie.id)}
                 >
-                  <Poster src={movie.poster} alt={movie.title} />
+                  {isLoading ? (
+                    <SkeletonOverlay />
+                  ) : (
+                    <Poster src={movie.poster} alt={movie.title} />
+                  )}
                   <MovieInfo>
                     <Review>
                       <ReviewIcon alt="Review Icon" />
@@ -359,8 +367,13 @@ const Poster = styled.img`
 
   @media (max-width: 480px) {
     padding: 0.4rem 0.3rem;
-    width: 6.4rem;
-    height: 9.5rem;
+    width: 6.2rem;
+    height: 9.3rem;
+  }
+  @media (max-width: 390px) {
+    padding: 0.4rem 0.3rem;
+    width: 5.6rem;
+    height: 8.7rem;
   }
 `;
 
@@ -371,4 +384,38 @@ const MoreViewText = styled.p`
   justify-content: flex-end;
   cursor: pointer;
   font-size: 0.8rem;
+`;
+const SkeletonOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8.2rem;
+  height: 11.55rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.07) 25%,
+    rgba(255, 255, 255, 0.159) 50%,
+    rgba(255, 255, 255, 0.07) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  margin-right: 0.7rem;
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 5.6rem;
+    height: 8.7rem;
+  }
+  @media (max-width: 390px) {
+    width: 5.2rem;
+    height: 8.3rem;
+  }
 `;

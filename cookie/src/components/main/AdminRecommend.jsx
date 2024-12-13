@@ -12,6 +12,7 @@ function AdminRecommend() {
 
   useEffect(() => {
     const fetchMainPageMovies = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           `${serverBaseUrl}/api/movies/mainAdminRecommend`
@@ -67,14 +68,18 @@ function AdminRecommend() {
                     cursor: "pointer",
                   }}
                 >
-                  <Poster src={movie.poster} alt={movie.title} />
+                  {isLoading ? (
+                    <SkeletonOverlay />
+                  ) : (
+                    <Poster src={movie.poster} alt={movie.title} />
+                  )}
                   <MovieInfo>
                     <Review>
                       <ReviewIcon alt="Review Icon" />
                       <Count>{movie.reviews}</Count>
                     </Review>
                     <Like>
-                      <LikeIcon alt="Review Icon" />
+                      <LikeIcon alt="Like Icon" />
                       <Count>{movie.likes}</Count>
                     </Like>
                   </MovieInfo>
@@ -206,13 +211,52 @@ const Poster = styled.img`
 
   @media (max-width: 768px) {
     padding: 0.4rem 0.3rem;
-    width: 7rem;
-    height: 10rem;
+    width: 6rem;
+    height: 8rem;
   }
 
   @media (max-width: 480px) {
     padding: 0.4rem 0.3rem;
-    width: 6.4rem;
-    height: 9.5rem;
+    width: 6.2rem;
+    height: 9.3rem;
+  }
+  @media (max-width: 390px) {
+    padding: 0.4rem 0.3rem;
+    width: 5.6rem;
+    height: 8.7rem;
+  }
+`;
+export const SkeletonOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8.2rem;
+  height: 11.55rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.07) 25%,
+    rgba(255, 255, 255, 0.159) 50%,
+    rgba(255, 255, 255, 0.07) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  margin-right: 0.7rem;
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 5.6rem;
+    height: 8.7rem;
+  }
+  @media (max-width: 390px) {
+    width: 5.2rem;
+    height: 8.3rem;
   }
 `;

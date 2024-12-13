@@ -4,12 +4,12 @@ import serverBaseUrl from "../../config/apiConfig";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 const MatchUpSection = () => {
   const navigate = useNavigate();
 
   const [matchUps, setMatchUps] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const isLoading = matchUps.length === 0;
 
   useEffect(() => {
     const fetchMainPageMovies = async () => {
@@ -29,41 +29,47 @@ const MatchUpSection = () => {
     fetchMainPageMovies();
   }, []);
 
-  const handleNext = () => {
-    if (currentIndex < matchUps.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
+  // const handleNext = () => {
+  //   if (currentIndex < matchUps.length - 1) {
+  //     setCurrentIndex(currentIndex + 1);
+  //   }
+  // };
 
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+  // const handlePrev = () => {
+  //   if (currentIndex > 0) {
+  //     setCurrentIndex(currentIndex - 1);
+  //   }
+  // };
 
   const handleMatchUpVotePage = (matchUpId) => {
-    navigate(`/matchup/${matchUpId}`);  // 페이지 이동
-  }
-
+    navigate(`/matchup/${matchUpId}`); // 페이지 이동
+  };
   return (
     <Wrapper>
-      {matchUps.length > 0 && (
+      {isLoading ? (
+        <SkeletonOverlay />
+      ) : (
         <>
           <Title>이번주 쿠키의 매치업</Title>
           <MatchUpContainer>
             <Overlay>
               <MatchUpInfo>
                 <VsImage></VsImage>
-                <VoteButton onClick={() => handleMatchUpVotePage(matchUps[currentIndex].matchUpId)}>
+                <VoteButton
+                  onClick={() =>
+                    handleMatchUpVotePage(matchUps[currentIndex].matchUpId)
+                  }
+                >
                   {matchUps[currentIndex].matchUpTitle}
                 </VoteButton>
-                <MatchUpDescription>쿠키에서 여운을 더 즐겨보세요!</MatchUpDescription>
-                <MatchUpDescription>좋아하는 영화에 투표하고 이야기 나누는 중</MatchUpDescription>
+                <MatchUpDescription>
+                  쿠키에서 여운을 더 즐겨보세요!
+                </MatchUpDescription>
+                <MatchUpDescription>
+                  좋아하는 영화에 투표하고 이야기 나누는 중
+                </MatchUpDescription>
               </MatchUpInfo>
             </Overlay>
-            <PrevButton onClick={handlePrev} disabled={currentIndex === 0}>
-              &lt;
-            </PrevButton>
             <Movie>
               <Image
                 src={matchUps[currentIndex].movie1.moviePoster}
@@ -76,12 +82,6 @@ const MatchUpSection = () => {
                 alt={matchUps[currentIndex].movie2.movieTitle}
               />
             </Movie>
-            <NextButton
-              onClick={handleNext}
-              disabled={currentIndex === matchUps.length - 1}
-            >
-              &gt;
-            </NextButton>
           </MatchUpContainer>
         </>
       )}
@@ -90,7 +90,6 @@ const MatchUpSection = () => {
 };
 
 export default MatchUpSection;
-
 
 const Wrapper = styled.div`
   position: relative;
@@ -104,7 +103,7 @@ const Title = styled.h2`
   color: #ffffff;
   padding: 2rem 0 0.4rem 0.375rem;
   display: flex;
-`
+`;
 
 const MatchUpContainer = styled.div`
   position: relative;
@@ -179,27 +178,52 @@ const VoteButton = styled.button`
   height: 42px;
   border-radius: 0.32rem;
   border: none;
-  background-color: #00D6E8;
-  cursor:pointer;
+  background-color: #00d6e8;
+  cursor: pointer;
   margin-bottom: 8px;
-`
+`;
 
 const MatchUpInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-`
+`;
 
 const MatchUpDescription = styled.p`
   margin: 0;
   color: #fff;
   font-weight: bold;
   font-size: 1.5rem;
-`
+`;
 
 const VsImage = styled.div`
-  background: no-repeat center/cover url('/assets/images/main/christmas-vs.png');
+  background: no-repeat center/cover url("/assets/images/main/christmas-vs.png");
   width: 100px;
   height: 100px;
-`
+`;
+const SkeletonOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 560px;
+  height: 404px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.9);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.07) 25%,
+    rgba(255, 255, 255, 0.159) 50%,
+    rgba(255, 255, 255, 0.07) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+`;

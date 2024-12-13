@@ -142,8 +142,13 @@ const UserInfo = styled.div`
 const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 12.5rem;
-
+  margin-top: 15.5rem;
+  @media (max-width: 768px) {
+    margin-top: 9rem;
+  }
+  @media (max-width: 390px) {
+    margin-top: 6.5rem;
+  }
   button {
     background-color: #aad6e7;
     color: #724b2e;

@@ -9,7 +9,7 @@ import TopButton from "../components/searchpage/TopButton";
 import { useEffect, useState } from "react";
 import LoginModal from "../components/common/LoginModal";
 import useAuthStore from "../stores/useAuthStore";
-import Question from "../components/main/Question"
+import Question from "../components/main/Question";
 
 const Main = () => {
   const [showTopButton, setShowTopButton] = useState(false);
@@ -41,7 +41,7 @@ const Main = () => {
           <SpecialMovie categorydata={categoryData} />
           <GenreMovie categorydata={categoryData} />
           <Question />
-          </Content>
+        </Content>
         <LoginModal />
         <WriteReviewButton onClick={() => isLogined("/searchmov")}>
           리뷰 작성하기
@@ -54,7 +54,6 @@ const Main = () => {
 };
 
 export default Main;
-
 
 const CommonContainer = styled.div`
   width: 100%;
@@ -111,7 +110,7 @@ const WriteReviewButton = styled.button`
   bottom: 9.375rem;
   right: calc(50% - 20.88rem);
   transform: translateX(-50%);
-  background-color: #AAD6E7;
+  background-color: #aad6e7;
   color: var(--text);
   font-size: 1rem;
   font-weight: 700;
@@ -123,19 +122,19 @@ const WriteReviewButton = styled.button`
   z-index: 1000;
 
   &:hover {
-    background-color: #82DCFF;
-    @media (max-width: 600px) {
-      font-size: 0.8rem;
-      padding: 0.5rem 0.8125rem;
-      right: calc(50% - 15.5rem);
-      bottom: 8rem;
-    }
-    @media (max-width: 390px) {
-      font-size: 0.75rem;
-      padding: 0.5rem 0.6875rem;
-      right: calc(50% - 14.1rem);
-      bottom: 6rem;
-    }
+    background-color: #82dcff;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.6875rem;
+    right: calc(50% - 15.4rem);
+    bottom: 8rem;
+  }
+  @media (max-width: 390px) {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.6875rem;
+    right: calc(50% - 13.9rem);
+    bottom: 7rem;
   }
 `;
 
