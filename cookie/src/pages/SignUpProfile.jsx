@@ -7,7 +7,7 @@ import axiosInstance from "../api/auth/axiosInstance";
 import toast from "react-hot-toast";
 
 const MainContainer = styled.div`
-  background-color: #fff4b9;
+  background-color: #000000;
   height: 100vh;
   padding: 4.375rem 0 0 0;
 `;
@@ -19,7 +19,7 @@ const MainTitle = styled.div`
 
   h2 {
     margin: 0.8rem;
-    color: #724b2e;
+    color: #ffff;
   }
   @media (max-width: 768px) {
     h2 {
@@ -48,9 +48,13 @@ const UserInfo = styled.div`
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-    box-shadow: 0.13rem 0.19rem 0.5rem rgba(3, 6, 59, 0.2);
+    border: none;
+    box-shadow: inset 0 0 0 4px #fff;
+
     &:hover {
-      border: 1px solid var(--ticket-bg);
+      background-color: var(--sub);
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
     }
   }
 
@@ -69,7 +73,7 @@ const UserInfo = styled.div`
 
   p {
     margin: 1.5rem 0 0.5rem 0;
-    color: #724b2e;
+    color: #ffff;
     font-weight: 500;
   }
 
@@ -83,29 +87,29 @@ const UserInfo = styled.div`
     justify-content: center;
   }
   .nickName__valid--text {
-    color: var(--notice);
+    color: #aad6e7;
     padding: 0 5px;
     font-size: 1rem;
     margin: -5px 0 0 0;
   }
   .nickName__valid--btn {
     margin: 8px 0 0 0;
-    background-color: ${(props) => (props.$isSelected ? "#724b2e" : "#aad6e7")};
-    color: ${(props) => (props.$isSelected ? "white" : "#724b2e")};
+    background-color: ${(props) => (props.$isSelected ? "#ffff" : "#aad6e7")};
+    color: ${(props) => (props.$isSelected ? "#ffff" : "#724b2e")};
     border-radius: 0.75rem;
     padding: 0.5rem 1rem;
     border: none;
     cursor: pointer;
     &:hover {
-      background-color: #724b2e;
-      color: white;
+      background-color: #82dcff;
+      color: #724b2e;
     }
   }
   label {
     display: block;
     font-size: 1rem;
     margin-bottom: 1rem;
-    color: #724b2e;
+    color: #ffff;
     font-weight: 700;
   }
 
@@ -115,7 +119,7 @@ const UserInfo = styled.div`
     height: 3rem;
     border-radius: 0.75rem;
     border: none;
-    box-shadow: 0.5rem 0.625rem 12rem 5rem #ffeb7d;
+    box-shadow: 1rem 0.625rem 12rem 5rem #494949;
     font-size: 1rem;
     padding: 0.5rem;
     margin-top: 0.5rem;
@@ -123,7 +127,7 @@ const UserInfo = styled.div`
     color: var(--text);
   }
   input:focus {
-    outline: 1px solid #724b2e;
+    outline: 1px solid #82dcff;
   }
   @media (max-width: 768px) {
     input {
@@ -138,7 +142,7 @@ const UserInfo = styled.div`
 const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 14.5rem;
+  margin-top: 12.5rem;
 
   button {
     background-color: #aad6e7;
@@ -151,6 +155,10 @@ const SubmitBtn = styled.div`
     font-weight: 700;
     outline: none;
     cursor: pointer;
+    &:hover {
+      background-color: #82dcff;
+      color: #724b2e;
+    }
   }
   @media (max-width: 768px) {
     button {

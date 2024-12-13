@@ -11,7 +11,7 @@ import Spinner from "../components/common/Spinner";
 import goBack from "../assets/images/admin/goBack_br.svg";
 
 const MainContainer = styled.div`
-  background-color: #fff4b9;
+  background-color: #000000;
   height: 100vh;
   padding: 2rem 0 0 0;
   margin: 0 auto;
@@ -32,7 +32,7 @@ const MainTitle = styled.div`
 
   h2 {
     margin: 0.8rem;
-    color: #724b2e;
+    color: #ffff;
   }
   @media (max-width: 768px) {
     h2 {
@@ -45,12 +45,12 @@ const SubTitle = styled.div`
   margin: 2.5rem 3.3rem;
 
   h3 {
-    color: #724b2e;
+    color: #ffff;
     margin: 0;
   }
 
   p {
-    color: #235b97;
+    color: #82dcff;
     margin: 0;
     font-size: 0.9rem;
   }
@@ -80,7 +80,7 @@ const GenreBtn = styled.button`
 const SubmitBtn = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 15rem;
+  margin-top: 13rem;
   @media (max-width: 768px) {
     margin-top: 10rem;
   }
@@ -91,11 +91,15 @@ const SubmitBtn = styled.div`
     height: 4rem;
     border-radius: 0.75rem;
     border: none;
-    box-shadow: 0.5rem 0.625rem 12rem 3rem #ffeb7d;
+    box-shadow: 1rem 0.625rem 12rem 5rem #494949;
     font-size: 1.2rem;
     font-weight: 700;
     outline: none;
     cursor: pointer;
+    &:hover {
+      background-color: #82dcff;
+      color: #724b2e;
+    }
   }
   @media (max-width: 768px) {
     button {
