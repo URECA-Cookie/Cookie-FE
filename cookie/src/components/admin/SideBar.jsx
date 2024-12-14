@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import cookieLogo from "../../assets/images/admin/cookieLogo.svg";
 import logout from "../../assets/images/admin/logout.svg";
@@ -5,8 +7,6 @@ import setting from "../../assets/images/admin/setting.svg";
 import movie from "../../assets/images/admin/movie.svg";
 import award from "../../assets/images/admin/award.svg";
 import cookie from "../../assets/images/admin/cookie.svg";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import GlobalStyle from "../../styles/global";
 
 const PageNav = styled.div`
@@ -69,10 +69,18 @@ const SideBarContainer = styled.div`
     margin-right: 0.5rem;
     width: 40px;
   }
+  .active {
+    color: var(--text);
+  }
+  .inactive {
+    color: var(--sub-text);
+  }
 `;
 
 function SideBar() {
+  const location = useLocation();
   const navigate = useNavigate();
+
   const sideMenu = [
     {
       image: movie,
@@ -95,14 +103,16 @@ function SideBar() {
       link: "/admin/badge",
     },
   ];
+
   const handleClick = (link) => {
     navigate(link);
   };
+
   const handleLogout = () => {
     localStorage.removeItem("refreshToken");
     sessionStorage.removeItem("accessToken");
     navigate("/admin");
-    toast.success("로그아웃되었습니다.");
+    alert("로그아웃 되었어요!");
   };
 
   return (
@@ -119,7 +129,7 @@ function SideBar() {
         {sideMenu.map((menuItem, index) => (
           <div
             key={index}
-            className="sidebar__menu"
+            className={`sidebar__menu ${location.pathname === menuItem.link ? "active" : "inactive"}`}
             onClick={() => handleClick(menuItem.link)}
           >
             <img src={menuItem.image} alt={`${menuItem.title}_icon`} />

@@ -176,7 +176,7 @@ const categoryData = [
   { categoryId: 26, mainCategory: "시즌", subCategory: "크리스마스" },
   { categoryId: 27, mainCategory: "시즌", subCategory: "새해" },
   { categoryId: 28, mainCategory: "시즌", subCategory: "명절" },
-  { categoryId: 29, mainCategory: "테마", subCategory: "심화를 소재로 한" },
+  { categoryId: 29, mainCategory: "테마", subCategory: "실화를 소재로 한" },
   { categoryId: 30, mainCategory: "테마", subCategory: "가족과 함께" },
   { categoryId: 31, mainCategory: "테마", subCategory: "연인과 함께" },
   { categoryId: 32, mainCategory: "테마", subCategory: "열린결말" },

@@ -35,7 +35,7 @@ const FormContanier = styled.div`
 
   label {
     font-size: 1rem;
-    color: var(--text);
+    color: #ffff;
   }
 
   input {
@@ -64,7 +64,7 @@ const FormContanier = styled.div`
     box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
   }
   button:hover {
-    box-shadow: 0 0.375rem 1.25rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0.375rem 1.25rem rgba(130, 236, 255, 0.333);
   }
 `;
 
@@ -89,6 +89,8 @@ function AdminLogin() {
         localStorage.setItem("refreshToken", refreshToken);
         console.log(accessToken);
         console.log(refreshToken);
+
+        alert("로그인 되었어요!");
         navigate("/admin/movie");
       } else {
         throw new Error("토큰 발급 실패");

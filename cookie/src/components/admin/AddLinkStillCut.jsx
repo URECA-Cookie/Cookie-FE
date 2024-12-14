@@ -173,9 +173,9 @@ function AddLinkStillCut({ selectedMovie, stillCuts, onUpdateStillCuts }) {
               >
                 {link}
               </YoutubeLink>
-              <DeleteBtn onClick={() => handleDeleteYoutubeLink(link)}>
+              {/* <DeleteBtn onClick={() => handleDeleteYoutubeLink(link)}>
                 <img src={deleteBtn} alt="delete_button" />
-              </DeleteBtn>
+              </DeleteBtn> */}
             </div>
           ))}
       </MovieInfoSection>
