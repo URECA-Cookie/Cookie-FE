@@ -141,11 +141,8 @@ function GenreMovie({ categorydata }) {
                 className="genre__movie--list"
                 onClick={() => handleMovieClick(movie.id)}
               >
-                {isLoading ? (
-                  <SkeletonOverlay />
-                ) : (
-                  <Poster src={movie.poster} alt={movie.title} />
-                )}
+                <Poster src={movie.poster} alt={movie.title} />
+
                 <MovieInfo>
                   <Review>
                     <ReviewIcon alt="Review Icon" />

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axiosInstance from "../api/auth/axiosInstance";
 import goBackBtn from "../assets/images/main/goBack_wh.svg";
+import { SkeletonOverlay } from "../components/main/AdminRecommend";
 
 const CategoryMovieFeed = () => {
   const location = useLocation();
@@ -53,7 +54,7 @@ const CategoryMovieFeed = () => {
   };
 
   useEffect(() => {
-    fetchMovies(0); // 첫 페이지 로드
+    fetchMovies(0);
   }, []);
 
   const handleMovieClick = (movieId) => {
@@ -77,10 +78,12 @@ const CategoryMovieFeed = () => {
               ref={index === movies.length - 1 ? lastMovieElementRef : null}
               onClick={() => handleMovieClick(movie.id)}
             >
-              <Poster src={movie.poster} alt={movie.title} />
-              <Info>
-                <Title>{movie.title}</Title>
-              </Info>
+              {isLoading ? (
+                <SkeletonOverlay />
+              ) : (
+                <Poster src={movie.poster} alt={movie.title} />
+              )}
+              <Info></Info>
             </MovieItem>
           ))}
         </div>
@@ -147,6 +150,10 @@ const Poster = styled.img`
   width: 100%;
   border-radius: 0.3rem;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Info = styled.div`

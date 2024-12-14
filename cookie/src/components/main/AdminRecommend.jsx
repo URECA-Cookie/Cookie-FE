@@ -242,6 +242,7 @@ export const SkeletonOverlay = styled.div`
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
   margin-right: 0.7rem;
+  z-index: 100;
   @keyframes shimmer {
     0% {
       background-position: -200% 0;

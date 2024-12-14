@@ -173,11 +173,8 @@ function SpecialMovie({ categorydata }) {
                   className="specialMovie__list--info"
                   onClick={() => handleMovieClick(movie.id)}
                 >
-                  {isLoading ? (
-                    <SkeletonOverlay />
-                  ) : (
-                    <Poster src={movie.poster} alt={movie.title} />
-                  )}
+                  <Poster src={movie.poster} alt={movie.title} />
+
                   <MovieInfo>
                     <Review>
                       <ReviewIcon alt="Review Icon" />
@@ -384,38 +381,4 @@ const MoreViewText = styled.p`
   justify-content: flex-end;
   cursor: pointer;
   font-size: 0.8rem;
-`;
-const SkeletonOverlay = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 8.2rem;
-  height: 11.55rem;
-  background-color: rgba(0, 0, 0, 0.9);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.07) 25%,
-    rgba(255, 255, 255, 0.159) 50%,
-    rgba(255, 255, 255, 0.07) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-  margin-right: 0.7rem;
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  @media (max-width: 480px) {
-    width: 5.6rem;
-    height: 8.7rem;
-  }
-  @media (max-width: 390px) {
-    width: 5.2rem;
-    height: 8.3rem;
-  }
 `;
