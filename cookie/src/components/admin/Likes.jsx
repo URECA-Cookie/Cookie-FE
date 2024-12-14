@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SearchIcon from "@mui/icons-material/Search";
 import { SearchBarContainer, SearchIconButton, SearchInput } from "./Addmovie";
-import { TableTitle, MovieListContainer } from "./CookieMovieList";
+import { MovieListContainer, TableTitle } from "./CookieMovieList";
 import Pagination from "./Pagination";
+import SearchIcon from "@mui/icons-material/Search";
 import Edit from "../../assets/images/admin/Edit.svg";
 import axiosInstance from "../../api/auth/axiosInstance";
-import ReviewList from "./ReviewList";
+import LikeList from "./LikeList";
 
-const IconContainer = styled.div``;
-const IconButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
 export const DefalutContainer = styled.div`
   width: 1239px;
   min-height: 820px;
@@ -28,13 +22,19 @@ export const DefalutContainer = styled.div`
     -3px 4px 8px rgba(0, 0, 0, 0.06),
     3px -4px 8px rgba(0, 0, 0, 0.06);
 `;
-function Reviews() {
+const IconContainer = styled.div``;
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+function Likes() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
   const [registeredMovies, setRegisteredMovies] = useState([]);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const handleSearchSubmit = async () => {
     if (!searchKeyword.trim()) {
@@ -57,7 +57,6 @@ function Reviews() {
       setLoading(false);
     }
   };
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setCurrentPage(1);
@@ -72,12 +71,6 @@ function Reviews() {
   useEffect(() => {
     handleSearchSubmit();
   }, [currentPage]);
-
-  useEffect(() => {
-    if (searchKeyword.trim()) {
-      setSearchKeyword(searchKeyword);
-    }
-  }, [searchKeyword, currentPage]);
 
   const handleIconClick = (movieId) => {
     setSelectedMovieId(movieId);
@@ -150,9 +143,9 @@ function Reviews() {
         />
       </DefalutContainer>
 
-      {selectedMovieId && <ReviewList movieId={selectedMovieId} />}
+      {selectedMovieId && <LikeList movieId={selectedMovieId} />}
     </>
   );
 }
 
-export default Reviews;
+export default Likes;

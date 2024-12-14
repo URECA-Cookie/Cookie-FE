@@ -4,7 +4,7 @@ import { TabBtn, TabBtnContainer, Viewport } from "./AdminMovie";
 import review from "../../assets/images/admin/review.svg";
 import heart from "../../assets/images/admin/heart.svg";
 import Reviews from "../../components/admin/Reviews";
-// import Likes from "../../components/admin/Likes";
+import Likes from "../../components/admin/Likes";
 
 function AdminReviewLike() {
   const [activeTab, setActiveTab] = useState(1);

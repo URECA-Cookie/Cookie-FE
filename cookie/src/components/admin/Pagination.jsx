@@ -20,6 +20,7 @@ const NumberBtn = styled.button`
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 15px;
 `;
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
