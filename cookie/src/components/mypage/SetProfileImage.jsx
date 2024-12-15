@@ -132,7 +132,7 @@ const SetProfileImage = ({ profileImage, onChange }) => {
   const handleResetImage = () => {
     onChange({
       file: null,
-      preview: "192.png",
+      preview: "/assets/images/default.svg",
     });
     setShowModal(false);
   };

@@ -214,7 +214,7 @@ const GenreMovieList = styled.div`
 `;
 
 const Title = styled.h2`
-  color: var(--text-wh);
+  color: #f84b99;
   padding: 2rem 0 0.7rem 0.375rem;
 
   @media (max-width: 768px) {
@@ -263,8 +263,13 @@ const GenreBtn = styled.button`
   margin: 0 0.4rem 0.3rem 0;
   padding: 0 0 0 0.375rem;
   font-size: 1rem;
-  color: ${(props) => (props.$isSelected ? "#82DCFF" : "#afafaf")};
+  color: ${(props) => (props.$isSelected ? "#f84b99" : "#afafaf")};
   font-weight: ${(props) => (props.$isSelected ? "bold" : "normal")};
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #ff0777;
+  }
 
   @media (max-width: 768px) {
     margin: 0 0.7rem 0.5rem 0;

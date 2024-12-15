@@ -47,7 +47,7 @@ const ModalContent = styled.div`
   }
 
   .modal__loginBtn {
-    background-color: var(--sub);
+    background-color: #f84b99;
     width: 100%;
     height: 4rem;
     font-size: 1rem;
@@ -62,7 +62,7 @@ const ModalContent = styled.div`
     margin-bottom: 1rem;
 
     &:hover {
-      color: var(--text);
+      background-color: #ff0777;
     }
   }
 

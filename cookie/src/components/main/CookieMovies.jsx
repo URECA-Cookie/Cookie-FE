@@ -158,7 +158,7 @@ const Title = styled.h2`
   color: var(--text-wh);
   padding: 2rem 0 0 0.375rem;
   span {
-    color: #00d6e8;
+    color: #f84b99;
   }
   @media (max-width: 768px) {
     font-size: 1.2rem;

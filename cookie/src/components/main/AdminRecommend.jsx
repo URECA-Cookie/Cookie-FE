@@ -151,7 +151,7 @@ const MovieRecommendList = styled.div`
 `;
 
 const Title = styled.h2`
-  color: var(--text-wh);
+  color: #f84b99;
   padding: 2rem 0 0 0.375rem;
 
   @media (max-width: 768px) {

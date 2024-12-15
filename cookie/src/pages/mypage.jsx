@@ -209,10 +209,6 @@ const MyPage = () => {
     navigate("/myAllReviewList");
   };
 
-  const handleNotificationClick = () => {
-    navigate("/notifications");
-  };
-
   const handlePointHistoryClick = () => {
     if (!isLogined()) {
       openLoginModal();
@@ -279,7 +275,6 @@ const MyPage = () => {
             />
           )}
         </MypageContent>
-        <button onClick={() => handleNotificationClick()}>알림 목록</button>
       </MypageContainer>
     </>
   );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { FaPencilAlt } from "react-icons/fa";
 import MatchUpSection from "../components/main/MatchUpSection";
 import AdminRecommend from "../components/main/AdminRecommend";
 import CookieMovies from "../components/main/CookieMovies";
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import LoginModal from "../components/common/LoginModal";
 import useAuthStore from "../stores/useAuthStore";
 import Question from "../components/main/Question";
+import Footer from "../components/main/Footer";
 
 const Main = () => {
   const [showTopButton, setShowTopButton] = useState(false);
@@ -40,10 +41,11 @@ const Main = () => {
           <SpecialMovie categorydata={categoryData} />
           <GenreMovie categorydata={categoryData} />
           <Question />
+          <Footer />
         </Content>
         <LoginModal />
         <WriteReviewButton onClick={() => isLogined("/searchmov")}>
-          리뷰 작성하기
+          <FaPencilAlt className="icon" />
         </WriteReviewButton>
         <TopButton visible={showTopButton} onClick={scrollToTop} />
       </MainContainer>
@@ -65,7 +67,6 @@ const MainContainer = styled(CommonContainer)`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: white;
   background-color: black;
 `;
 
@@ -79,18 +80,6 @@ const Content = styled.div`
     padding: 1rem;
   }
 `;
-
-// const HeaderWrapper = styled(CommonContainer)`
-//   position: fixed;
-//   top: 0;
-//   z-index: 100;
-//   background-color: #04012d;
-//   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-
-//   @media (max-width: 600px) {
-//     padding: 0 10px;
-//   }
-// `;
 
 const NavbarWrapper = styled(CommonContainer)`
   position: fixed;
@@ -112,29 +101,43 @@ const WriteReviewButton = styled.button`
   color: #fdf8fa;
   font-size: 1rem;
   font-weight: 700;
-  padding: 0.625rem 1.25rem;
-  border-radius: 50px;
+  padding: 0.8rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
   border: none;
   box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 1000;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   &:hover {
-    background-color: #c33677;
+    background-color: #ff0777;
+  }
+
+  .icon {
+    font-size: 1.8rem;
   }
 
   @media (max-width: 600px) {
     right: 1.5rem;
     bottom: 8rem;
+    width: 4rem;
+    height: 4rem;
     font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem;
   }
 
   @media (max-width: 390px) {
     right: 1rem;
     bottom: 6rem;
+    width: 3.8rem;
+    height: 3.8rem;
     font-size: 0.8rem;
-    padding: 0.5rem 0.9rem;
+    padding: 0.6rem;
   }
 `;
 
@@ -167,16 +170,4 @@ const categoryData = [
   { id: 27, mainCategory: "시즌", subCategory: "새해" },
   { id: 26, mainCategory: "시즌", subCategory: "크리스마스" },
   { id: 28, mainCategory: "시즌", subCategory: "명절" },
-  { id: 29, mainCategory: "테마", subCategory: "실화를 소재로 한" },
-  { id: 30, mainCategory: "테마", subCategory: "가족과 함께" },
-  { id: 31, mainCategory: "테마", subCategory: "연인과 함께" },
-  { id: 32, mainCategory: "테마", subCategory: "열린결말" },
-  { id: 33, mainCategory: "테마", subCategory: "비 오는 날" },
-  { id: 34, mainCategory: "테마", subCategory: "킬링타임" },
-  { id: 35, mainCategory: "테마", subCategory: "디즈니" },
-  { id: 36, mainCategory: "연령대", subCategory: "10대" },
-  { id: 37, mainCategory: "연령대", subCategory: "20대" },
-  { id: 38, mainCategory: "연령대", subCategory: "30대" },
-  { id: 39, mainCategory: "연령대", subCategory: "40대" },
-  { id: 40, mainCategory: "연령대", subCategory: "50대" },
 ];

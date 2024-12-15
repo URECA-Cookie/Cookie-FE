@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   position: fixed;
   bottom: 90px;
-  right: calc(50% - 270px);
+  right: calc(50% - 30px);
   display: ${({ visible }) => (visible ? "flex" : "none")};
   align-items: center;
   justify-content: center;
@@ -29,9 +29,8 @@ const StyledButton = styled.button`
     background-color: #ffe6f2;
   }
 
-  /* 반응형 수정 */
-  @media (max-width: 600px) {
-    right: 1.5rem;
+  @media (max-width: 768px) {
+    right: 14rem;
     bottom: 70px;
     width: 45px;
     height: 45px;
@@ -41,8 +40,8 @@ const StyledButton = styled.button`
     }
   }
 
-  @media (max-width: 390px) {
-    right: 1rem;
+  @media (max-width: 480px) {
+    right: 12rem;
     bottom: 60px;
     width: 40px;
     height: 40px;

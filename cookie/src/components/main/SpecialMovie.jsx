@@ -265,7 +265,7 @@ const ThemeBtn = styled.button`
   cursor: pointer;
   margin: 0 0.8rem 0 0;
   font-size: 1rem;
-  color: ${(props) => (props.$isSelected ? "#82DCFF" : "#afafaf")};
+  color: ${(props) => (props.$isSelected ? "#f84b99 " : "#afafaf")};
   font-weight: ${(props) => (props.$isSelected ? "bold" : "normal")};
   padding: 0 0 0 0.375rem;
 
@@ -276,17 +276,17 @@ const ThemeBtn = styled.button`
 `;
 
 const CategoryBtn = styled.button`
-  background-color: ${(props) => (props.$isSelected ? "var(--sub)" : "white")};
-  color: ${(props) => (props.$isSelected ? "var(--text)" : "var(--text)")};
+  background-color: ${(props) => (props.$isSelected ? "#f84b99" : "white")};
+  color: ${(props) => (props.$isSelected ? "black" : "var(--text)")};
   font-size: 13px;
   font-weight: ${(props) => (props.$isSelected ? "bold" : "500")};
   border-radius: 0.3rem;
-  border: 1px solid var(--sub);
+  border: 1px solid #f84b99;
   padding: 0.5rem 1rem;
   cursor: pointer;
   &:hover {
-    background-color: var(--sub);
-    color: var(--text);
+    background-color: #ff0777;
+    color: black;
   }
   white-space: nowrap;
 
@@ -297,7 +297,7 @@ const CategoryBtn = styled.button`
 `;
 
 const Title = styled.h2`
-  color: var(--text-wh);
+  color: #f84b99;
   padding: 2rem 0 0.7rem 0.375rem;
 
   @media (max-width: 768px) {

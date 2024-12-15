@@ -29,6 +29,8 @@ import Notification from "../pages/Notification";
 import PointHistory from "../components/matchup/PointSection";
 import PointHistoryPage from "../pages/PointHistoryPage";
 import AdminReviewLike from "../pages/admin/AdminReviewLike";
+import Terms from "../components/main/terms";
+import Privacy from "../components/main/Privacy";
 
 export const AppRouteDef = {
   Main: {
@@ -65,6 +67,24 @@ export const AppRouteDef = {
     element: (
       <PrivateRoute>
         <ErrorPage />
+      </PrivateRoute>
+    ),
+  },
+
+  termsPage: {
+    path: "/terms",
+    element: (
+      <PrivateRoute>
+        <Terms />
+      </PrivateRoute>
+    ),
+  },
+
+  privacyPage: {
+    path: "/privacy",
+    element: (
+      <PrivateRoute>
+        <Privacy />
       </PrivateRoute>
     ),
   },
@@ -269,7 +289,7 @@ export const AppRouteDef = {
       </PrivateRoute>
     ),
   },
-  
+
   PointHistory: {
     path: "/point-history",
     element: (

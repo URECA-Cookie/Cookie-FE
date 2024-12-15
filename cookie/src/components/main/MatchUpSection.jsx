@@ -100,7 +100,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #ffffff;
+  color: #f84b99;
   padding: 2rem 0 0.4rem 0.375rem;
   display: flex;
 `;
@@ -178,9 +178,15 @@ const VoteButton = styled.button`
   height: 42px;
   border-radius: 0.32rem;
   border: none;
-  background-color: #00d6e8;
+  background-color: #f84b99;
   cursor: pointer;
   margin-bottom: 8px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: #ff0777;
+  }
 `;
 
 const MatchUpInfo = styled.div`

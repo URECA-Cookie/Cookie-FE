@@ -138,7 +138,7 @@ const SearchInfoText = styled.p`
 `;
 
 const DefaultResultsHeader = styled.div`
-  color: #00c4d3;
+  color: #f84b99;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;

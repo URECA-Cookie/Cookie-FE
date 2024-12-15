@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../common/Notification";
 import useUserStore from "../../stores/useUserStore";
-import CookieLogo from "../../assets/images/login/cookie_lg.svg";
+import CookieLogo from "/assets/images/cookie-logo.png";
 
 const Logo = styled.div`
   display: flex;
@@ -10,8 +10,8 @@ const Logo = styled.div`
   cursor: pointer;
 
   img {
-    width: 40px; /* 로고 이미지 크기 */
-    height: 40px;
+    width: 150px;
+    height: 120px;
     object-fit: cover;
   }
 
@@ -63,8 +63,9 @@ const Header = () => {
 
   const isWhiteHeader =
     location.pathname === "/mypage" ||
-    location.pathname == "/myAllReviewList" ||
+    location.pathname === "/myAllReviewList" ||
     location.pathname === "/point-history" ||
+    location.pathname === "/notifications" ||
     location.pathname === "/likemovies" ||
     location.pathname === "/likereviews" ||
     location.pathname === "/manageprofile" ||
@@ -75,13 +76,23 @@ const Header = () => {
     navigate("/");
   };
 
+  const handleNotificationClick = () => {
+    navigate("/notifications");
+  };
+
   return (
     <HeaderContainer isWhiteHeader={isWhiteHeader}>
       <Logo onClick={handleLogoClick}>
         <img src={CookieLogo} alt="로고 이미지" />
       </Logo>
       <div className="header-right">
-        {userInfo.nickname ? <Notification /> : <button>로그인</button>}
+        {userInfo.nickname ? (
+          <div onClick={handleNotificationClick}>
+            <Notification />
+          </div>
+        ) : (
+          <button>로그인</button>
+        )}
       </div>
     </HeaderContainer>
   );
