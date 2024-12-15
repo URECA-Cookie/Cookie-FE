@@ -47,12 +47,12 @@ const FavoriteItem = styled.div`
 
 const FavoriteText = styled.span`
   font-size: 1rem;
-  color: #black;
+  color: black;
   font-weight: bold;
 `;
 
 const FavoriteIcon = styled.div`
-  color: #black;
+  color: black;
   font-size: 1rem;
 `;
 

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const BadgeSection = styled.div`
   text-align: center;
-  margin-top: 120px;
+  margin-top: 100px;
   background-color: #f8f8f8;
   padding: 10px 20px;
   border-radius: 16px;
@@ -53,10 +53,9 @@ const BadgeLabel = styled.span`
   color: #333;
 `;
 
-const BadgeList = ({ title, badges }) => {
+const BadgeList = ({ badges }) => {
   return (
     <BadgeSection>
-      <BadgeTitle>{title}</BadgeTitle>
       <BadgeContainer>
         {badges.length > 0 ? (
           badges.map((badge, index) => (

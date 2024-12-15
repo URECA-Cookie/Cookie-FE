@@ -50,8 +50,7 @@ const ReviewTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: bold;
   margin-top: 1.5rem;
-
-  color: #ffffff;
+  color: #F84B99;
 `;
 
 const MoreLink = styled.span`
@@ -258,7 +257,7 @@ const MyPage = () => {
           />
         </div>
         <MypageContent>
-          <BadgeList title={`${userData.nickname}의 배지`} badges={badgeData} />
+          <BadgeList badges={badgeData} />
           {/* <GenreChart data={genreScores} /> */}
           <PointHistory
             badgePoint={badgePoint}
@@ -267,6 +266,7 @@ const MyPage = () => {
 
           <FavoriteList title="좋아요" items={favoriteItems} />
           <PushNotificationToggle pushEnabled={pushEnabled} />
+
           <ReviewHeader>
             <ReviewTitle>{`${userData.nickname}의 리뷰`}</ReviewTitle>
             <MoreLink onClick={handleMoreClick}>{" 더보기"}</MoreLink>
